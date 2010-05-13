@@ -1,0 +1,217 @@
+<!DOCTYPE html> 
+<html> 
+<head> 
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+    <title>jQuery: An introduction, tutorial, and example</title>
+	<link rel="stylesheet" type="text/css" href="css/slides.css" media="all">
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="js/slides.js"></script>	
+</head>
+<body>
+
+<div id="container">
+
+	<div class="slide">
+		<h1>jQuery: An introduction, tutorial, and example</h1>
+		
+		<ul>
+			<li>By: <strong>Ryan McGrath</strong>, lead UI Engineer at <a href="http://webs.com/" title="Webs.com" target="_blank">Webs.com</a></li>
+			<li>Web: <a href="http://venodesigns.net/" title="Veno Designs" target="_blank">http://venodesigns.net/</a></li>
+			<li>Twitter: <a href="http://twitter.com/ryanmcgrath" title="Ryan on Twitter" target="_blank">@ryanmcgrath</a></li>
+			<li>Github: <a href="http://github.com/ryanmcgrath" title="Ryan on Github" target="_blank">"ryanmcgrath"</a></li>
+			<li>Writing and Editing: <a href="http://jsmag.com/" title="JSMag" target="_blank">JSMag, a monthly Javascript publication</a></li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>First: a word on Javascript ("JS")</h1>
+		
+		<ul>
+			<li>Previously a "black sheep" of the web development world</li>
+			<li>Several different JS engines to target, all behave differently</li>
+			<li>Libraries (jQuery, Mootools, etc) exist to make your life easier</li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>Enter: jQuery</h1>
+		
+		<ul>
+			<li>Created by John Resig, Mozilla JS Evangelist</li>
+			<li>Open Source, shipping on 30% of all websites on the internet (CNN, The White House website, etc)</li>
+			<li>Backed in part by Microsoft, Nokia, and a slew of other companies.
+		</ul>
+		
+		<h1>What's jQuery good for?</h1>
+		
+		<ul>
+			<li>DOM-abstraction layer, normalizes events and operations across all browsers</li>
+			<li>Short, simple CSS-based syntax for traversing the DOM (otherwise a complete pain)</li>
+			<li>Event handling and delegation (again, normalizing across all browsers)</li>
+			<li>Support for animating CSS properties of elements</li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>Where jQuery isn't as strong</h1>
+		
+		<ul>
+			<li>jQuery is a great library for DOM-work, but doesn't offer much outside of that scope</li>
+			<li>Pure JS additions don't come with jQuery - frameworks like Mootools offer a richer scenario around the computer science aspects
+				<em>(Classes, ECMAScript 5 functions, various other helpers)</em>
+			</li>
+			<li>Server-side work is almost non-existent with jQuery, just because it's so DOM based</li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>Loading jQuery</h1>
+		
+		<ul>
+			<li>jQuery is a bit of overhead - ~20kb on page load with gzipping, ~70kb without.</li>
+			<li>Rarely host it yourself - instead, pull it down from Google's CDN (Content Delivery Network)</li>
+			<li>
+<pre><code>http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js</code></pre>
+</li>
+<li>
+	Enough sites supply their users with this resource that your chances of having it cached are much higher than on your own.
+</li>
+		</ul>
+	</div>
+
+	<div class="slide">
+		<h1>Why jQuery Rocks: Sizzle, an awesome selector API</h1>
+		
+		<ul>
+			<li>Sizzle is the open source, incredibly fast selector engine used in jQuery</li>
+			<li>jQuery selectors are based off of CSS selectors - reuse your existing knowledge</li>
+			<li><pre><code>$("#container"); // Returns an object with a reference to a div id'd "container"</code></pre></li>
+			<li><pre><code>$(".slides"); // Returns an object with references to every slide</code></pre></li>
+			<li><pre><code>$("#container p"); // Returns an object with references to every &lt;p&gt; inside "container"</code></pre></li>
+		</ul>
+		
+		<h1>Check properties on those returned objects</h1>
+		
+		<ul>
+			<li><pre><code>$("#container").height(); // Returns a number</code></pre></li>
+			<li><pre><code>$("#container").width(); // Returns a number</code></pre></li>
+			<li><pre><code>$("#container").hasClass("lol"); // Boolean, returns true or false</code></pre></li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>$(document).ready(), and why it's important</h1>
+		
+		<ul>
+			<li>Web browsers will parse and execute JS as it's fed to them</li>
+			<li>If you feed it too early, parts of the page might not exist yet</li>
+			<li>Enter: $(document).ready() - defers the work until the page is ready to go</li>
+			<li>
+<pre><code>
+&lt;script type="text/javascript"&gt;
+$(document).ready(function() {
+    $("#container").html("&lt;strong&gt;Document's ready, so this'll actually work.&lt;/strong&gt;");
+});
+&lt;/script&gt;
+
+&lt;div id="container"&gt; &lt;/div&gt;
+</code></pre>
+			</li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>Setting events with jQuery</h1>
+		
+		<ul>
+			<li>jQuery further exposes the very "event-based" programming model of JS</li>
+			<li><pre><code>$("#container").click(function() {
+    alert("Woah, you clicked inside this container.");
+});</code></pre></li>
+<li><pre><code>$("#container").click(function() {
+    // $(this) refers to the current object we're working on. Don't repeatedly lookup!
+    $(this).fadeOut("fast");
+});</code></pre></li>
+<li><pre><code>$(".myInputs").keydown(function() {
+	// .val() will return the value of an input or textarea
+	alert("You typed: " + $(this).val()); 
+});</code></pre></li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>Custom animations with jQuery</h1>
+		
+		<ul>
+			<li>Animations in Javascript are based on CSS properties - position, width, height, etc</li>
+			<li>jQuery makes this incredibly easy, through use of .animate()</li>
+			<li>.animate() takes a property mapping, an optional animation speed, and an optional callback function</li>
+			<li>
+<pre><code>$("#container").click(function() {
+    $(this).animate({width: $(this).width() + 100, height: $(this).height() + 100}, 
+        800, 
+	function() {
+	        alert("Animation finished!");
+        }
+    );
+});</code></pre>				
+			</li>
+		</ul>
+	</div>
+	
+	<div class="slide">
+		<h1>The biggest misconception about jQuery</h1>
+		
+		<ul>
+			<li>The biggest misconception is that jQuery makes it so you don't have to program.</li>
+			<li>You *are* still programming, so watch what you're doing.</li>
+			<li>The $() pattern in jQuery is a function, not a variable. Repeatedly calling it is *slow*. Cache things:</li>
+			<li>
+<pre><code>var container = $("#container");
+
+for(var i = 0; i < 10; i++) { container.append("Tossing text inside"); }
+</code></pre>
+			</li>
+			<li>is better than...</li>
+			<li>
+<pre><code>for(var i = 0; i < 10; i++) { $("#container").append("Tossing text inside"); }
+</code></pre>
+</li>
+	</div>
+	
+	<div class="slide">
+		<h1>Further Reading</h1>
+		
+		<ul>
+			<li>
+				<strong><a href="http://jqueryfordesigners.com/" title="jQuery for Designers" target="_blank">jQuery for Designers</a></strong>:
+				Great resource for the non-programmers who want to get used to jQuery.
+			</li>
+			<li>
+				<strong><a href="http://www.learningjquery.com/" title="Learning jQuery" target="_blank">Learning jQuery</a></strong>:
+				Good reading for the more programmer types who care about the internals.
+			</li>
+			<li>
+				<strong><a href="http://jsmag.com/" title="JSMag" target="_blank">JSMag, a monthly JS Publication</a></strong>:
+				A good way to keep up with current news and trends in the Javascript world.
+			</li>
+		</ul>
+		
+		<h1>Essential Tools and Resources</h1>
+		
+		<ul>
+			<li>
+				<strong><a href="http://getfirebug.com/" title="Get Firebug.com" target="_blank">Firebug:</a></strong>:
+				For inspecting and debugging Javascript, it's essential you have a developer console. If you dislike Firefox, most browsers
+				have an equivalent now (Webkit Inspector, Opera Dragonfly, IE8 Dev Tools, etc)
+			</li>
+			<li>
+				<strong><a href="http://docs.jquery.com/" title="jQuery Docs" target="_blank">jQuery Docs</a></strong>:
+				The jQuery Documentation is outstanding, and covers far more of the overall API than I can cover in a small presentation.
+			</li>
+	</div>
+
+</div>
+
+</body>
+</html>
